@@ -1,8 +1,8 @@
 class Api::V1::UserInfosController < ApplicationController
   def create
-    response = UserInfo::CalculateInsuranceType.call(user_info_params:)
+    response = UserInfo::CalculateInsuranceType.call(user_info_params: user_info_params)
 
-    render json: response.result, status: :ok
+    render json: response.result
   end
 
   private
