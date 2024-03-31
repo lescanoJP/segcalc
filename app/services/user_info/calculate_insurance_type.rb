@@ -24,5 +24,7 @@ class UserInfo::CalculateInsuranceType < BusinessProcess::Base
   def save_user_info
     byebug
     @user_info = UserInfo.create(@params)
+
+    fail(@user_info.errors.full_messages) unless @user_info.persisted?
   end
 end
