@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_31_201600) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_31_213522) do
   create_table "houses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "ownership_status"
     t.bigint "user_info_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_info_id"], name: "index_houses_on_user_info_id"
+  end
+
+  create_table "insurance_plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "auto"
+    t.string "disability"
+    t.string "home"
+    t.string "life"
+    t.bigint "user_info_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_info_id"], name: "index_insurance_plans_on_user_info_id"
   end
 
   create_table "user_infos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
