@@ -8,7 +8,7 @@ class Api::V1::UserInfosController < ApplicationController
   private
 
   def user_info_params
-    params.permit(:age, :income, :dependents, :marital_status, risk_questions: {},
-                  car: [:year], house: [:ownership_status])
+    params.permit(:age, :income, :dependents, :marital_status, risk_questions: [],
+                  vehicle: [:year], house: [:ownership_status])
   end
 end

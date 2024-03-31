@@ -11,14 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_03_31_201600) do
-  create_table "cars", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "year"
-    t.bigint "user_info_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_info_id"], name: "index_cars_on_user_info_id"
-  end
-
   create_table "houses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "ownership_status"
     t.bigint "user_info_id", null: false
@@ -37,6 +29,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_31_201600) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "cars", "user_infos"
+  create_table "vehicles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "year"
+    t.bigint "user_info_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_info_id"], name: "index_vehicles_on_user_info_id"
+  end
+
   add_foreign_key "houses", "user_infos"
+  add_foreign_key "vehicles", "user_infos"
 end
