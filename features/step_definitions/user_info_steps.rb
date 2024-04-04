@@ -201,3 +201,38 @@ Então('os demais seguros devem ser padrões') do
   expect(@user_info_response.result[:disability]).to eq 'padrao'
   expect(@user_info_response.result[:home]).to eq 'padrao'
 end
+
+Dado('os parâmetros para fazer a cotação de seguros sem a informação da renda') do
+  @params = {
+    age: 41,
+    dependents: 0,
+    marital_status: 'single',
+    house: { ownership_status: 'owned' },
+    risk_questions: [0, 1, 1],
+    vehicle: { year: 2022 }
+  }
+end
+
+Então('é retornado um erro informando que a renda não pode ficar em branco') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'Income não pode ficar em branco'
+end
+
+Dado('os parâmetros para fazer a cotação de seguros com uma renda negativa') do
+  @params = {
+    age: 41,
+    dependents: 0,
+    income: -100,
+    marital_status: 'single',
+    house: { ownership_status: 'owned' },
+    risk_questions: [0, 1, 1],
+    vehicle: { year: 2022 }
+  }
+end
+
+Então('é retornado um erro informando que a renda não ser menor que zero') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'Income deve ser maior ou igual a 0'
+end

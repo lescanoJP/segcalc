@@ -56,3 +56,13 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Então é retornado a cotação sobre o seu seguro, e o seguro auto deve ser avancado
     E os demais seguros devem ser padrões
 
+  Cenário: Usuário envia informações sem informar a renda
+    Dado os parâmetros para fazer a cotação de seguros sem a informação da renda
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que a renda não pode ficar em branco
+
+  Cenário: Usuário envia informações com a renda negativa
+    Dado os parâmetros para fazer a cotação de seguros com uma renda negativa
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que a renda não ser menor que zero
+
