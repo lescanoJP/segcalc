@@ -38,3 +38,14 @@ Então('é retornado que o seguro auto, residencial e de invalidez são inelegiv
   expect(@user_info_response.result[:home]).to eq 'inelegivel'
   expect(@user_info_response.result[:disability]).to eq 'inelegivel'
 end
+
+Dado('os parâmetros para fazer a cotação de seguros sem informações da residência') do
+  @params = {
+    age: 35,
+    dependents: 2,
+    income: 0,
+    marital_status: 'married',
+    risk_questions: [0, 1, 0],
+    vehicle: { year: 2018 }
+  }
+end
