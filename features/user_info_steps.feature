@@ -49,3 +49,10 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado a cotação sobre o seu seguro, e o seguro de vida deve ser avancado e o seguro invalidez padrao
     E o seguro de carro e o seguro residencial devem ser avancados
+
+  Cenário: Usuário envia dados informando que o carro foi produzido nos ultimos 5 anos
+    Dado os parâmetros para fazer a cotação de seguros com a informação de que o carro foi produzido recentemente
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado a cotação sobre o seu seguro, e o seguro auto deve ser avancado
+    E os demais seguros devem ser padrões
+
