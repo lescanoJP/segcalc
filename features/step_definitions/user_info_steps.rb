@@ -236,3 +236,38 @@ Então('é retornado um erro informando que a renda não ser menor que zero') do
   expect(@user_info_response.error.present?).to be true
   expect(@user_info_response.error).to include 'Income deve ser maior ou igual a 0'
 end
+
+Dado('os parâmetros para fazer a cotação de seguros sem a informação da idade') do
+  @params = {
+    dependents: 0,
+    income: 100,
+    marital_status: 'single',
+    house: { ownership_status: 'owned' },
+    risk_questions: [0, 1, 1],
+    vehicle: { year: 2022 }
+  }
+end
+
+Então('é retornado um erro informando que a idade não pode ficar em branco') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'Age não pode ficar em branco'
+end
+
+Dado('os parâmetros para fazer a cotação de seguros com idade negativa') do
+  @params = {
+    age: -60,
+    dependents: 0,
+    income: 100,
+    marital_status: 'single',
+    house: { ownership_status: 'owned' },
+    risk_questions: [0, 1, 1],
+    vehicle: { year: 2022 }
+  }
+end
+
+Então('é retornado um erro informando que a idade não pode ser menor que zero') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'Age deve ser maior ou igual a 0'
+end

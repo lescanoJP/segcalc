@@ -66,3 +66,13 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado um erro informando que a renda não ser menor que zero
 
+  Cenário: Usuário envia informações sem informar a idade
+    Dado os parâmetros para fazer a cotação de seguros sem a informação da idade
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que a idade não pode ficar em branco
+
+  Cenário: Usuário envia informações com idade negativa
+    Dado os parâmetros para fazer a cotação de seguros com idade negativa
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que a idade não pode ser menor que zero
+
