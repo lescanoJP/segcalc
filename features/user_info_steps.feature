@@ -35,5 +35,11 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
   Cenário: Usuario envia dados válidos e sua casa é alugada
     Dado os parâmetros para fazer a cotção de seguros com a casa alugada
     Quando o usuário submete o seu cadastro no formulário
-    Então é retornado a cotação sobre o seu seguro invalidez e residencial devem ser avançados
+    Então é retornado a cotação sobre o seu seguro, e os seguros invalidez e residencial devem ser avançados
     E o seguro de vida e o auto devem ser padrão
+
+  Cenário: Usuario envia dados possuindo dependentes
+    Dado os parâmetros para fazer a cotação de seguros com um numero positivo de dependentes
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado a cotação sobre o seu seguro, e os seguros invalidez e vida devem ser avançados
+    E o seguro de carro e o seguro residencial devem ser padrão
