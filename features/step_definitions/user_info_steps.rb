@@ -54,7 +54,7 @@ end
 Dado('os parâmetros para fazer a cotação de seguros com a renda zerada') do
   @params = {
     age: 35,
-    dependents: 2,
+    dependents: 0,
     income: 0,
     marital_status: 'married',
     house: { ownership_status: 'rented' },
@@ -150,4 +150,29 @@ end
 Então('o seguro de carro e o seguro residencial devem ser padrão') do
   expect(@user_info_response.result[:auto]).to eq 'padrao'
   expect(@user_info_response.result[:home]).to eq 'padrao'
+end
+
+Dado('os parâmetros para fazer a cotação de seguros com a informação de que é casado') do
+  @params = {
+    age: 41,
+    dependents: 0,
+    income: 100_000,
+    marital_status: 'married',
+    house: { ownership_status: 'owned' },
+    risk_questions: [1, 1, 1],
+    vehicle: { year: 2000 }
+  }
+end
+
+Então('é retornado a cotação sobre o seu seguro, e o seguro de vida deve ser avancado e o seguro invalidez padrao') do
+  expect(@user_info_response.success?).to be true
+  expect(@user_info_response.error.present?).to be false
+  expect(@user_info_response.result.keys).to eq [:auto, :disability, :home, :life]
+  expect(@user_info_response.result[:life]).to eq 'avancado'
+  expect(@user_info_response.result[:disability]).to eq 'padrao'
+end
+
+Então('o seguro de carro e o seguro residencial devem ser avancados') do
+  expect(@user_info_response.result[:home]).to eq 'avancado'
+  expect(@user_info_response.result[:auto]).to eq 'avancado'
 end
