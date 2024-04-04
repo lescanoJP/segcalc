@@ -16,3 +16,8 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Dado os parâmetros para fazer a cotação de seguros sem informações da residência
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado que o seguro auto, residencial e de invalidez são inelegiveis
+
+  Cenário: Usuario envia informações sobre a renda zerada
+    Dado os parâmetros para fazer a cotação de seguros com a renda zerada
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado que o seguro auto, residencial e de invalidez são inelegiveis

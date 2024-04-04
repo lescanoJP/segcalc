@@ -2,7 +2,7 @@ Dado('os parâmetros para fazer a cotação de seguros válidos com casa e veíc
   @params = {
     age: 35,
     dependents: 2,
-    income: 0,
+    income: 10000,
     marital_status: 'married',
     house: { ownership_status: 'rented' },
     risk_questions: [0, 1, 0],
@@ -34,6 +34,7 @@ end
 Então('é retornado que o seguro auto, residencial e de invalidez são inelegiveis') do
   expect(@user_info_response.success?).to be true
   expect(@user_info_response.error.present?).to be false
+  expect(@user_info_response.result.keys).to eq [:auto, :disability, :home, :life]
   expect(@user_info_response.result[:auto]).to eq 'inelegivel'
   expect(@user_info_response.result[:home]).to eq 'inelegivel'
   expect(@user_info_response.result[:disability]).to eq 'inelegivel'
@@ -45,6 +46,18 @@ Dado('os parâmetros para fazer a cotação de seguros sem informações da resi
     dependents: 2,
     income: 0,
     marital_status: 'married',
+    risk_questions: [0, 1, 0],
+    vehicle: { year: 2018 }
+  }
+end
+
+Dado('os parâmetros para fazer a cotação de seguros com a renda zerada') do
+  @params = {
+    age: 35,
+    dependents: 2,
+    income: 0,
+    marital_status: 'married',
+    house: { ownership_status: 'rented' },
     risk_questions: [0, 1, 0],
     vehicle: { year: 2018 }
   }
