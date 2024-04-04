@@ -3,7 +3,6 @@ class Api::V1::UserInfosController < ApplicationController
     response = UserInfo::CalculateInsuranceType.call(user_info_params: user_info_params)
 
     if response.success?
-      byebug
       return render json: response.result, status: :ok if response.success?
     else
       return render json: { errors: [response.error] }, status: :unprocessable_entity
