@@ -26,3 +26,8 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Dado os parâmetros para fazer a cotação de seguros com idade acima de sessenta anos
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado que o seguro de vida e o de invalidez são inelegiveis
+
+  Cenário: Usuario envia dados com idade menor que trinta anos
+    Dado os parâmetros para fazer a cotação de seguros com idade menor que trinta anos
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado a cotação sobre seu seguro e deve estar no plano padrão

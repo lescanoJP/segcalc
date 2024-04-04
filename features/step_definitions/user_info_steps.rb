@@ -82,3 +82,22 @@ Então('é retornado que o seguro de vida e o de invalidez são inelegiveis') do
   expect(@user_info_response.result[:life]).to eq 'inelegivel'
   expect(@user_info_response.result[:disability]).to eq 'inelegivel'
 end
+
+Dado('os parâmetros para fazer a cotação de seguros com idade menor que trinta anos') do
+  @params = {
+    age: 29,
+    dependents: 0,
+    income: 100_000,
+    marital_status: 'single',
+    house: { ownership_status: 'owned' },
+    risk_questions: [1, 1, 1],
+    vehicle: { year: 2000 }
+  }
+end
+
+Então('é retornado a cotação sobre seu seguro e deve estar no plano padrão') do
+  expect(@user_info_response.success?).to be true
+  expect(@user_info_response.error.present?).to be false
+  expect(@user_info_response.result.keys).to eq [:auto, :disability, :home, :life]
+  expect(@user_info_response.result.values.uniq).to eq ['padrao']
+end
