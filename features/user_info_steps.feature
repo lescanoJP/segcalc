@@ -6,3 +6,8 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Dado os parâmetros para fazer a cotação de seguros válidos com casa e veículo
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado com sucesso a sua cotação de planos para o seguro
+
+  Cenário: Usuario não fornece veículo
+    Dado os parâmetros para fazer a cotação de seguros sem veículo
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado que o seguro auto, residencial e de invalidez são inelegiveis
