@@ -76,3 +76,13 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado um erro informando que a idade não pode ser menor que zero
 
+  Cenário: Usuário envia informações sem informar o número de dependentes
+    Dado os parâmetros para fazer a cotação de seguros sem a informação sobre dependentes
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que os dependentes não podem ficar em branco
+
+  Cenário: Usuário envia informações com dependentes negativos
+    Dado os parâmetros para fazer a cotação de seguros sobre dependentes negativos
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que os dependentes devem ser maior igual a zero
+
