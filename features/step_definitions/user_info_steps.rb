@@ -336,7 +336,7 @@ Dado('os parâmetros para fazer a cotação de seguros com uma informação inv�
   }
 end
 
-Então('é retornado um erro informando que o estado civil não esta incluido na lista') do
+Então('é retornado um erro informando que o estado civil não está incluido na lista') do
   expect(@user_info_response.success?).to be false
   expect(@user_info_response.error.present?).to be true
   expect(@user_info_response.error).to include 'Marital status não está incluído na lista'
@@ -373,8 +373,43 @@ Dado('os parâmetros para fazer a cotação de seguros com dados diferentes de z
 end
 
 Então('é retornado um erro informando que são aceitos apenas números zero e um') do
-  puts @user_info_response.error
   expect(@user_info_response.success?).to be false
   expect(@user_info_response.error.present?).to be true
   expect(@user_info_response.error).to include 'Questões de risco só aceita os números zero e um'
+end
+
+Dado('os parâmetros para fazer a cotação de seguros com informações inválidas sobre a casa') do
+  @params = {
+    age: 60,
+    dependents: 5,
+    income: 100,
+    marital_status: 'single',
+    house: { ownership_status: 'building' },
+    risk_questions: [1, 1, 1],
+    vehicle: { year: 2022 }
+  }
+end
+
+Então('é retornado um erro informando que a informação sobre a casa não está na lista') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'House ownership status não está incluído na lista'
+end
+
+Dado('os parâmetros para fazer a cotação de seguros com ano de fabricação de veículo negativo') do
+  @params = {
+    age: 60,
+    dependents: 5,
+    income: 100,
+    marital_status: 'single',
+    house: { ownership_status: 'rented' },
+    risk_questions: [1, 1, 1],
+    vehicle: { year: -100 }
+  }
+end
+
+Então('é retornado um erro informando que a informação que o ano do veículo deve ser maior que zero') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'Vehicle year deve ser maior ou igual a 0'
 end

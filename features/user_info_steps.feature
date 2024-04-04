@@ -94,7 +94,7 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
   Cenário: Usuário envia informações sobre estado civil inválidas
     Dado os parâmetros para fazer a cotação de seguros com uma informação inválida sobre o estado civil
     Quando o usuário submete o seu cadastro no formulário
-    Então é retornado um erro informando que o estado civil não esta incluido na lista
+    Então é retornado um erro informando que o estado civil não está incluido na lista
 
   Cenário: Usuário envia informações sobre questões de risco com apenas uma informação
     Dado os parâmetros para fazer a cotação de seguros com apenas uma informação sobre questões de risco
@@ -105,3 +105,15 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Dado os parâmetros para fazer a cotação de seguros com dados diferentes de zero e um
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado um erro informando que são aceitos apenas números zero e um
+
+  Cenário: Usuário envia informações sobre a casa inválidas
+    Dado os parâmetros para fazer a cotação de seguros com informações inválidas sobre a casa
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que a informação sobre a casa não está na lista
+
+  Cenário: Usuário envia informações sobre com número menor que zero
+    Dado os parâmetros para fazer a cotação de seguros com ano de fabricação de veículo negativo
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que a informação que o ano do veículo deve ser maior que zero
+
+
