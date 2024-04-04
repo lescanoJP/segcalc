@@ -100,3 +100,8 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Dado os parâmetros para fazer a cotação de seguros com apenas uma informação sobre questões de risco
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado um erro informando que o as questões de risco devem conter três dados
+
+  Cenário: Usuário envia informações sobre questões de risco com dados diferentes de zero e um
+    Dado os parâmetros para fazer a cotação de seguros com dados diferentes de zero e um
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que são aceitos apenas números zero e um

@@ -6,6 +6,7 @@ pt-BR:
           attributes:
             base:
               risk_questions_size: Questões de risco devem conter três dados
+              risk_question_invalid: Questões de risco só aceita os números zero e um
       messages:
         record_invalid: 'A validação falhou: %{errors}'
         restrict_dependent_destroy:
