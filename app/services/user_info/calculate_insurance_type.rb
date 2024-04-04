@@ -3,6 +3,7 @@ class UserInfo::CalculateInsuranceType < BusinessProcess::Base
 
   steps :parse_params,
         :save_user_info,
+        :calculate_base_score,
         :init_score_calculation,
         :init_insurance_plan,
         :check_if_can_have_basic_insurances,
@@ -12,12 +13,14 @@ class UserInfo::CalculateInsuranceType < BusinessProcess::Base
         :check_if_user_house_is_rented,
         :check_if_has_dependents,
         :check_if_user_is_married,
-        :check_car
+        :check_vehicle,
+        :calculate_insurance,
+        :parse_response
 
 
   def call
     process_steps
-    @user_info
+    @response
   end
 
   private
@@ -28,8 +31,8 @@ class UserInfo::CalculateInsuranceType < BusinessProcess::Base
     house_ownership_status = received_params.dig(:house, :ownership_status)
 
     @params = received_params.except(:vehicle, :house)
-    init_vehicule
-    init_house
+    init_vehicule(@params, vehicle_year)
+    init_house(@params, house_ownership_status)
   end
 
   def save_user_info
@@ -38,11 +41,15 @@ class UserInfo::CalculateInsuranceType < BusinessProcess::Base
     fail(@user_info.errors.full_messages) unless @user_info.persisted?
   end
 
+  def calculate_base_score
+    @base_score = @params[:risk_questions].sum
+  end
+
   def init_score_calculation
-    @auto = 0
-    @disability = 0
-    @life = 0
-    @home = 0
+    @auto = @base_score
+    @disability = @base_score
+    @life = @base_score
+    @home = @base_score
   end
 
   def init_insurance_plan
@@ -53,7 +60,7 @@ class UserInfo::CalculateInsuranceType < BusinessProcess::Base
   end
 
   def check_if_can_have_basic_insurances
-    return if @user_info.check_if_can_have_basic_insurances
+    return if @user_info.check_insurance_possibility
 
     @auto_plan = 'inelegivel'
     @home_plan = 'inelegivel'
@@ -112,28 +119,37 @@ class UserInfo::CalculateInsuranceType < BusinessProcess::Base
     @disability = @disability - 1
   end
 
-  def check_car
-    return if @user_info.car.nil?
+  def check_vehicle
+    return if @user_info.vehicle.nil?
     return unless @user_info.vehicle.is_recent_made?
 
     @auto = @auto + 1
   end
 
   def calculate_insurance
-    @insurance_plan = @user_info.build_insurance_plan.create(auto: calculate_plan(@auto),
-                                                       disability: calculate_plan(@disability),
-                                                       home: calculate_plan(@home),
-                                                       life: calculate_plan(@life))
+    @insurance_plan = @user_info.build_insurance_plan(auto: calculate_plan(@auto_plan, @auto),
+                                                      disability: calculate_plan(@disability_plan, @disability),
+                                                      home: calculate_plan(@home_plan, @home),
+                                                      life: calculate_plan(@life_plan, @life))
 
     fail(@insurance_plan.errors.full_messages) unless @insurance_plan.save
   end
 
-  def calculate_plan(insurance_type)
-    return  insurance_type if insurance_type.present?
+  def parse_response
+    @response = {
+      auto: @insurance_plan.auto,
+      disability: @insurance_plan.disability,
+      home: @insurance_plan.home,
+      life: @insurance_plan.life
+    }
+  end
 
-    if insurance_type <= 0
+  def calculate_plan(insurance_type, score)
+    return insurance_type if insurance_type.present?
+
+    if score <= 0
       @plan = 'economico'
-    elsif insurance_type >= 1 && insurance_type <= 2
+    elsif score >= 1 && score <= 2
       @plan = 'padrao'
     else
       @plan = 'avancado'
