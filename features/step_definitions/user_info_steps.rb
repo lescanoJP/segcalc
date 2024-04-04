@@ -306,3 +306,38 @@ Então('é retornado um erro informando que os dependentes devem ser maior igual
   expect(@user_info_response.error.present?).to be true
   expect(@user_info_response.error).to include 'Dependents deve ser maior ou igual a 0'
 end
+
+Dado('os parâmetros para fazer a cotação de seguros sem informar o estado civil') do
+  @params = {
+    age: 60,
+    dependents: 5,
+    income: 100,
+    house: { ownership_status: 'owned' },
+    risk_questions: [0, 1, 1],
+    vehicle: { year: 2022 }
+  }
+end
+
+Então('é retornado um erro informando que o estado civil não pode ficar em branco') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'Marital status não pode ficar em branco'
+end
+
+Dado('os parâmetros para fazer a cotação de seguros com uma informação inválida sobre o estado civil') do
+  @params = {
+    age: 60,
+    dependents: 5,
+    income: 100,
+    marital_status: 'divorced',
+    house: { ownership_status: 'owned' },
+    risk_questions: [0, 1, 1],
+    vehicle: { year: 2022 }
+  }
+end
+
+Então('é retornado um erro informando que o estado civil não esta incluido na lista') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'Marital status não está incluído na lista'
+end

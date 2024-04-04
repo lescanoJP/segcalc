@@ -86,3 +86,13 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado um erro informando que os dependentes devem ser maior igual a zero
 
+  Cenário: Usuário envia informações sem informar estado civil
+    Dado os parâmetros para fazer a cotação de seguros sem informar o estado civil
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que o estado civil não pode ficar em branco
+
+  Cenário: Usuário envia informações sobre estado civil inválidas
+    Dado os parâmetros para fazer a cotação de seguros com uma informação inválida sobre o estado civil
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que o estado civil não esta incluido na lista
+
