@@ -96,3 +96,7 @@ Funcionalidade: Enviando dados de um usuário para fazer o cálculo do seu segur
     Quando o usuário submete o seu cadastro no formulário
     Então é retornado um erro informando que o estado civil não esta incluido na lista
 
+  Cenário: Usuário envia informações sobre questões de risco com apenas uma informação
+    Dado os parâmetros para fazer a cotação de seguros com apenas uma informação sobre questões de risco
+    Quando o usuário submete o seu cadastro no formulário
+    Então é retornado um erro informando que o as questões de risco devem conter três dados

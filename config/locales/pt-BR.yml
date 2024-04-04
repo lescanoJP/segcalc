@@ -1,6 +1,11 @@
 pt-BR:
   activerecord:
     errors:
+      models:
+        user_info:
+          attributes:
+            base:
+              risk_questions_size: Questões de risco devem conter três dados
       messages:
         record_invalid: 'A validação falhou: %{errors}'
         restrict_dependent_destroy:
@@ -127,6 +132,7 @@ pt-BR:
       not_an_integer: não é um número inteiro
       odd: deve ser ímpar
       other_than: deve ser diferente de %{count}
+      risk_question_size: Questões de risco devem ter 3 dados
       present: deve ficar em branco
       required: é obrigatório(a)
       taken: já está em uso

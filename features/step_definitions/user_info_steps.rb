@@ -341,3 +341,21 @@ Então('é retornado um erro informando que o estado civil não esta incluido na
   expect(@user_info_response.error.present?).to be true
   expect(@user_info_response.error).to include 'Marital status não está incluído na lista'
 end
+
+Dado('os parâmetros para fazer a cotação de seguros com apenas uma informação sobre questões de risco') do
+  @params = {
+    age: 60,
+    dependents: 5,
+    income: 100,
+    marital_status: 'single',
+    house: { ownership_status: 'owned' },
+    risk_questions: [0],
+    vehicle: { year: 2022 }
+  }
+end
+
+Então('é retornado um erro informando que o as questões de risco devem conter três dados') do
+  expect(@user_info_response.success?).to be false
+  expect(@user_info_response.error.present?).to be true
+  expect(@user_info_response.error).to include 'Questões de risco devem conter três dados'
+end

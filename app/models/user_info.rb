@@ -26,9 +26,9 @@ class UserInfo < ApplicationRecord
   def valid_risk_questions
     risk_questions_array = JSON.parse(risk_questions)
 
-    if risk_questions_array.length > 3 || risk_questions.length < 3
+    if risk_questions_array.length != 3
       errors.add(:base, :risk_questions_size)
-      throw :abort
+      return throw :abort
     end
 
     values = risk_questions_array.map { |question| question.is_a?(Integer) && (question == 0 || question == 1) }
