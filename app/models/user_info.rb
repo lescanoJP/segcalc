@@ -20,7 +20,7 @@ class UserInfo < ApplicationRecord
   end
 
   def is_sixty?
-    age >= 60
+    age > 60
   end
 
   def valid_risk_questions
